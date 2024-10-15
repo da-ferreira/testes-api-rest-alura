@@ -52,6 +52,12 @@ class AuthService {
       }
     }
 
+    const userAlredyRegistered = await Usuario.pegarPeloEmail(data.email);
+
+    if (userAlredyRegistered) {
+      throw new Error('Email já cadastrado.');
+    }
+
     try {
       data.senha = await bcryptjs.hash(data.senha, 8);
 
